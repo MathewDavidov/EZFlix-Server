@@ -10,8 +10,11 @@
 const User = require("./user");
 const Movie = require("./movie");
 
-User.hasMany(Movie);
-Movie.belongsTo(User);
+// User.hasMany(Movie);
+// Movie.belongsTo(User);
+
+User.belongsToMany(Movie, { through: "UsersMovies" });
+Movie.belongsToMany(User, { through: "UsersMovies" });
 
 module.exports = {
   // Campus,

@@ -14,18 +14,18 @@ const seedDatabase = async () => {
       email: "jake@yahoo.com",
       password: "fn3fh93dfu3",
     }),
-    Movie.create({
-      title: "Avengers",
-      overview: "Team",
-      movieAPIid: 240334,
-      releaseDate: "2015-06-06",
-    }),
-    Movie.create({
-      title: "Endgame",
-      overview: "No Team",
-      movieAPIid: 240301,
-      releaseDate: "2019-06-06",
-    }),
+    // Movie.create({
+    //   title: "Avengers",
+    //   overview: "Team",
+    //   movieAPIid: 240334,
+    //   releaseDate: "2015-06-06",
+    // }),
+    // Movie.create({
+    //   title: "Endgame",
+    //   overview: "No Team",
+    //   movieAPIid: 240301,
+    //   releaseDate: "2019-06-06",
+    // }),
   ]);
 };
 
