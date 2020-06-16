@@ -54,11 +54,11 @@ const configureApp = () => {
   app.use(cookieParser());
 
   // Our apiRouter
-  // const apiRouter = require("./routes/index");
+  const apiRouter = require("./routes/index");
   const authRouter = require("./auth");
 
   // Mount our apiRouter
-  // app.use("/api", apiRouter);
+  app.use("/api", apiRouter);
   app.use("/auth", authRouter);
 
   // Error handling;
