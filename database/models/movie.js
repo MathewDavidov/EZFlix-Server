@@ -4,17 +4,17 @@ const db = require("../db");
 const Movie = db.define("movie", {
     title: {
         type: Sequelize.STRING,
-        allowNull: false
+        //allowNull: false
     },
     overview: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT(),
     },
     movieAPIid: {
         type: Sequelize.STRING,
         allowNull: false,
-        validate: {
-            isNumeric: true,
-        }
+        // validate: {
+        //     isNumeric: true,
+        // }
     },
     releaseDate: {
         type: Sequelize.STRING,
