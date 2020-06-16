@@ -49,15 +49,17 @@ const configureApp = () => {
   app.use(logger("dev"));
   // handle request data:
   app.use(express.json());
-  app.use(express.urlencoded({ extended: false }));
+  app.use(express.urlencoded({ extended: true }));
   app.use(compression());
   app.use(cookieParser());
 
   // Our apiRouter
-  const apiRouter = require("./routes/index");
+  // const apiRouter = require("./routes/index");
+  const authRouter = require("./auth");
 
   // Mount our apiRouter
-  app.use("/api", apiRouter);
+  // app.use("/api", apiRouter);
+  app.use("/auth", authRouter);
 
   // Error handling;
   app.use((req, res, next) => {
