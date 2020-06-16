@@ -1,24 +1,31 @@
-const { Campus, Student } = require("../database/models");
+const { User, Movie } = require("../database/models");
 
 const seedDatabase = async () => {
   await Promise.all([
-    Campus.create({
-      name: "Brooklyn College",
-      address: "Brooklyn",
-      description: "A college in Brooklyn",
+    User.create({
+      email: "joshua@gmail.com",
+      password: "2hf92h9fh2",
     }),
-    Campus.create({
-      name: "College of Staten Island",
-      address: "Staten Island",
-      description: "A college on Staten Island",
+    User.create({
+      email: "dame@gmail.com",
+      password: "f20nhf02$f",
     }),
-    Campus.create({
-      name: "John Jay College",
-      address: "Manhattan",
-      description: "A college in Manhattan",
+    User.create({
+      email: "jake@yahoo.com",
+      password: "fn3fh93dfu3",
     }),
-    Student.create({ firstName: "Daniel" }),
-    Student.create({ firstName: "Sally", campusId: 1 }),
+    Movie.create({
+      title: "Avengers",
+      overview: "Team",
+      movieAPIid: 240334,
+      releaseDate: "2015-06-06",
+    }),
+    Movie.create({
+      title: "Endgame",
+      overview: "No Team",
+      movieAPIid: 240301,
+      releaseDate: "2019-06-06",
+    }),
   ]);
 };
 
