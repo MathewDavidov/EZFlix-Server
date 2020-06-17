@@ -39,4 +39,21 @@ router.get("/", async (req, res, next) => {
     // }
 });
 
+router.get("/:id", async (req, res, next) => {
+    const { id } = req.params;
+    let results = {};
+    await Axios
+        .get(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`)
+        .then((result) => {
+            results = result.data;
+        })
+        .catch((error) => console.log(error));
+    
+    try {
+      res.status(200).json(results);
+    } catch (error) {
+      next(error);
+    }
+});
+
 module.exports = router;

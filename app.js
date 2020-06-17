@@ -15,6 +15,7 @@ const helmet = require("helmet");
 const compression = require("compression");
 const session = require("express-session");
 const passport = require("passport");
+const cors = require("cors");
 
 // Utilities;
 const createLocalDatabase = require("./utils/createLocalDatabase");
@@ -65,6 +66,7 @@ const configureApp = () => {
   // handle request data:
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
+  app.use(cors({ credentials: true, origin: "http://localhost:3001" }));
   app.use(compression());
   app.use(cookieParser());
 
