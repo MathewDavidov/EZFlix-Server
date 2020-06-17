@@ -11,6 +11,10 @@ const User = db.define("user", {
             isEmail: true,
         }
     },
+    imageUrl: {
+      type: Sequelize.STRING,
+      defaultValue: "https://via.placeholder.com/256x256?text=User+Placeholder",
+    },
     password: { 
         type: Sequelize.STRING, 
         allowNull: false,
