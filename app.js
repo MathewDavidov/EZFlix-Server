@@ -13,13 +13,17 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const helmet = require("helmet");
 const compression = require("compression");
+const session = require("express-session");
+const passport = require("passport");
 
 // Utilities;
 const createLocalDatabase = require("./utils/createLocalDatabase");
 const seedDatabase = require("./utils/seedDatabase");
 
 // Our database instance;
+const SequelizeStore = require("connect-session-sequelize")(session.Store);
 const db = require("./database");
+const sessionStore = new SequelizeStore({ db });
 
 // A helper function to sync our database;
 const syncDatabase = () => {
@@ -43,6 +47,17 @@ const syncDatabase = () => {
 // Instantiate our express application;
 const app = express();
 
+// Passport and Express sessions
+passport.serializeUser((user, done) => done(null, user.id));
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await db.models.user.findByPk(id);
+    done(null, user);
+  } catch (err) {
+    done(err);
+  }
+});
+
 // A helper function to create our app with configurations and middleware;
 const configureApp = () => {
   app.use(helmet());
@@ -57,9 +72,6 @@ const configureApp = () => {
   const apiRouter = require("./routes/index");
   const authRouter = require("./auth");
 
-  // Mount our apiRouter
-  app.use("/api", apiRouter);
-  app.use("/auth", authRouter);
 
   // Error handling;
   app.use((req, res, next) => {
@@ -71,6 +83,18 @@ const configureApp = () => {
       next();
     }
   });
+  app.use(
+    session({
+      secret:
+        "a super secretive secret key string to encrypt and sign the cookie",
+      store: sessionStore,
+      resave: false,
+      saveUninitialized: false,
+    })
+  );
+
+  app.use(passport.initialize());
+  app.use(passport.session());
 
   // More error handling;
   app.use((err, req, res, next) => {
@@ -78,10 +102,15 @@ const configureApp = () => {
     console.error(err.stack);
     res.status(err.status || 500).send(err.message || "Internal server error.");
   });
+
+  // Mount our apiRouter
+  app.use("/api", apiRouter);
+  app.use("/auth", authRouter);
 };
 
 // Main function declaration;
 const bootApp = async () => {
+  await sessionStore.sync();
   await syncDatabase();
   await configureApp();
 };
