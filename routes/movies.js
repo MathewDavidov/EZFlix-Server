@@ -10,18 +10,19 @@ const SEARCH_API_URL = `https://api.themoviedb.org/3/search/movie?api_key=${API_
 router.get("/", async (req, res, next) => {
   let results = [];
   await Axios.get(MOVIE_API_URL)
-    .then((res) => {
-      results = res.data.results;
+    .then((getResult) => getResult.data.results)
+    .then((response) => {
+      results = response;
       // console.log(res.data.results);
-      for (const obj of results) {
-        Movie.create({
-          title: obj.title,
-          overview: obj.overview,
-          movieAPIid: obj.id,
-          releaseDate: obj.release_date,
-          vote_count: obj.vote_count,
-          vote_average: obj.vote_average,
-        });
+      //for (const obj of results) {
+        // Movie.create({
+        //   title: obj.title,
+        //   overview: obj.overview,
+        //   movieAPIid: obj.id,
+        //   releaseDate: obj.release_date,
+        //   vote_count: obj.vote_count,
+        //   vote_average: obj.vote_average,
+        // });
         // Movie.findOrCreate({
         //     where: {
         //         title: obj.title,
@@ -32,7 +33,7 @@ router.get("/", async (req, res, next) => {
         //         vote_average: obj.vote_average,
         //     },
         // });
-      }
+      //}
     })
     .catch((error) => console.log(error));
 
