@@ -46,7 +46,7 @@ router.post("/favorite/:id", async (req, res, next) => {
     await Axios
       .get(`https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.API_KEY}`)
       .then((result) => {
-        console.log(result.data);
+        // console.log(result.data);
         results = result.data;
       })
       .catch((error) => console.log(error));
@@ -72,5 +72,48 @@ router.post("/favorite/:id", async (req, res, next) => {
     next(error);
   }
 });
+
+// Route for removing a favorite movie based on given ID and the logged in user.
+router.delete("/:id/movies/remove/:movieID", async (req, res, next) => {
+  // If there is no user logged in, send a forbidden HTTP status
+  if(!req.user) {
+    res.status(403).send("User is not logged in.");
+  }
+
+  const { id } = req.params;
+  const { movieID } = req.params;
+
+  try {
+    // Find the logged in user and the movie to be removed based on the given parameters 
+    const currentUser = await User.findByPk(req.user.id, { include: Movie });
+    const movieToBeRemoved = await Movie.findOne({ where: { movieAPIid: movieID } });
+
+    // If the movie doesn't exist in the database, return a 401.
+    if (movieToBeRemoved == null) {
+      res.status(401).send("No such movie exists");
+    }
+
+    // Find whether of not the logged in user has an association with the found movie
+    const hasMovie = await currentUser.hasMovie(movieToBeRemoved);
+
+    // If not, return a 401.
+    if (!hasMovie) {
+      res.status(401).send("No such movie exists");
+    }
+
+    // Now we can remove the movie from the association 
+    await currentUser.removeMovie(movieToBeRemoved);
+    // await currentUser.removeMovie({
+    //   where: {
+    //     userId: id,
+    //     movieId: movieAPIid,
+    //   }
+    // })
+
+    res.status(204).end();
+  } catch (error) {
+    next(error);
+  }
+})
 
 module.exports = router;
