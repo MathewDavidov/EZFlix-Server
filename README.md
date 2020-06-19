@@ -72,4 +72,6 @@ API_KEY=thekey
 
 ```POST /api/users/favorite/:id``` adds a movie to the user's list of favorite movies based on the ID of the parameter, which calls themoviedb's API route for searching a movie with an ID. If there is no user logged-in, return a status of ```403```. Otherwise, return a json representation of the movie returned with a status of ```200```.
 
+```DELETE /api/users/:id/movies/remove/:movieID``` removes the movie (given by parameter movieID) associated with the logged-in user. The route performs a database query to see if the movie exists and if the movie is associated with the user. If the movie doesn't exist or isn't associated with the user, return a status of ```401```. Otherwise, remove the association and return a status of ```204```.
+
 ```GET /api/users/:id/movies``` returns a list of a user's favorite movie, where the user is given by the parameter ID.  If the user is not logged-in, return a status of ```403```. Otherwise, return a json representation of the list of movies with a status of ```200```.
