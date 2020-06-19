@@ -19,7 +19,19 @@ router.get("/", async (req, res, next) => {
           overview: obj.overview,
           movieAPIid: obj.id,
           releaseDate: obj.release_date,
+          vote_count: obj.vote_count,
+          vote_average: obj.vote_average,
         });
+        // Movie.findOrCreate({
+        //     where: {
+        //         title: obj.title,
+        //         overview: obj.overview,
+        //         movieAPIid: obj.id,
+        //         releaseDate: obj.release_date,
+        //         vote_count: obj.vote_count,
+        //         vote_average: obj.vote_average,
+        //     },
+        // });
       }
     })
     .catch((error) => console.log(error));

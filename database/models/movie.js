@@ -22,6 +22,12 @@ const Movie = db.define("movie", {
             isDate: true,
         }
     },
+    vote_count: {
+        type: Sequelize.INTEGER
+    },
+    vote_average: {
+        type: Sequelize.DECIMAL
+    },
     image: {
         type: Sequelize.STRING,
         defaultValue: "https://via.placeholder.com/256x256?text=Placeholder",
