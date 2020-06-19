@@ -59,6 +59,8 @@ router.post("/favorite/:id", async (req, res, next) => {
         movieAPIid: id,
         releaseDate: results.release_date,
         image: results.poster_path,
+        vote_count: results.vote_count,
+        vote_average: results.vote_average,
       },
     });
 
