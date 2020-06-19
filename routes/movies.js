@@ -6,6 +6,7 @@ const { default: Axios } = require("axios");
 const API_KEY = process.env.API_KEY;
 const MOVIE_API_URL = `https://api.themoviedb.org/3/trending/all/day?api_key=${API_KEY}`;
 const SEARCH_API_URL = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=`; //Jack+Reacher"
+const DISCOVER_API_URL = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=`;
 
 router.get("/", async (req, res, next) => {
   let results = [];
@@ -47,6 +48,24 @@ router.get("/search/:term", async (req, res, next) => {
   await Axios.get(`${SEARCH_API_URL}${term}`)
     .then((response) => {
       results = response.data;
+    })
+    .catch((error) => console.log(error));
+
+  try {
+    res.status(200).json(results);
+  } catch (error) {
+    next(error);
+  }
+});
+
+//route to serve up movies from their genre id no.
+router.get("/search/genre/:id", async (req, res, next) => {
+  const { genreId } = req.params;
+  console.log(genreId);
+  let results = [];
+  await Axios.get(`${DISCOVER_API_URL}${genreId}`)
+    .then((response) => {
+      results.response.data;
     })
     .catch((error) => console.log(error));
 
