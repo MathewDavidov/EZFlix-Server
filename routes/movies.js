@@ -60,12 +60,12 @@ router.get("/search/:term", async (req, res, next) => {
 
 //route to serve up movies from their genre id no.
 router.get("/search/genre/:id", async (req, res, next) => {
-  const { genreId } = req.params;
-  console.log(genreId);
+  const { id } = req.params;
+  console.log(id);
   let results = [];
-  await Axios.get(`${DISCOVER_API_URL}${genreId}`)
+  await Axios.get(`${DISCOVER_API_URL}${id}`)
     .then((response) => {
-      results.response.data;
+      results = response.data;
     })
     .catch((error) => console.log(error));
 
