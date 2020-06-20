@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 const { User, Movie } = require("../database/models");
 const { default: Axios } = require("axios");
+const { response } = require("express");
 
 const API_KEY = process.env.API_KEY;
 const MOVIE_API_URL = `https://api.themoviedb.org/3/trending/all/day?api_key=${API_KEY}`;
@@ -77,6 +78,24 @@ router.get("/search/genre/:id", async (req, res, next) => {
   console.log(id);
   let results = [];
   await Axios.get(`${DISCOVER_API_URL}${id}`)
+    .then((response) => {
+      results = response.data;
+    })
+    .catch((error) => console.log(error));
+
+  try {
+    res.status(200).json(results);
+  } catch (error) {
+    next(error);
+  }
+});
+
+//route to serve up movies based on both search term and genre id
+router.get("/search/genre/:id/:term", async (req, res, next) => {
+  const { id, term } = req.params;
+  console.log("Genre ID: " + id + " and Search Term is: " + term);
+  let results = [];
+  await Axios.get(`${SEARCH_API_URL}${term}&with_genres=${id}`)
     .then((response) => {
       results = response.data;
     })
