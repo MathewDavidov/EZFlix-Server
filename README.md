@@ -1,6 +1,10 @@
-# [Name] Backend Express Server
+# EZFlix Backend Express Server
 
-[Name] is a full stack web application completed for the CUNY2X bootcamp. The backend portion of the project was built with Node.js, Express.js, Passport.js, Sequelize, and PostgreSQL.
+EZFlix is a full stack web application completed for the CUNY2X bootcamp. The backend portion of the project was built with Node.js, Express.js, Passport.js, Sequelize, and PostgreSQL.
+
+## Deployed Website
+
+[The deployed website is located here.](https://ezflix.netlify.app/)
 
 ## Run the App Locally
 
