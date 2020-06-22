@@ -97,6 +97,10 @@ const configureApp = () => {
 
   app.use(passport.initialize());
   app.use(passport.session());
+  
+  // Mount our apiRouter
+  app.use("/api", apiRouter);
+  app.use("/auth", authRouter);
 
   // More error handling;
   app.use((err, req, res, next) => {
@@ -104,10 +108,6 @@ const configureApp = () => {
     console.error(err.stack);
     res.status(err.status || 500).send(err.message || "Internal server error.");
   });
-
-  // Mount our apiRouter
-  app.use("/api", apiRouter);
-  app.use("/auth", authRouter);
 };
 
 app.get("/", (req, res, next) => {
