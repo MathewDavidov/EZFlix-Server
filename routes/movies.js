@@ -118,6 +118,18 @@ router.get("/:id", async (req, res, next) => {
     .catch((error) => console.log(error));
 
   try {
+    // Movie.findOrCreate({
+    //   where: {  
+    //     title: results.title,
+    //     overview: results.overview,
+    //     movieAPIid: id,
+    //     releaseDate: results.release_date,
+    //     image: results.poster_path,
+    //     vote_count: results.vote_count,
+    //     vote_average: results.vote_average,
+    //   },    
+    // });
+
     res.status(200).json(results);
   } catch (error) {
     next(error);
