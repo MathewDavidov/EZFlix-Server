@@ -35,6 +35,8 @@ router.get("/:id/movies", async (req, res, next) => {
 // Route for adding a favorite movie based on given ID and the logged in user.
 router.post("/favorite/:id", async (req, res, next) => {
   // If there is no user logged in, send a forbidden HTTP status
+  console.log("req " + req);
+  console.log("req user " + req.user);
   if (!req.user) {
     res.status(403).send("User is not logged in.");
   }
