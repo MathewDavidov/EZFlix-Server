@@ -66,7 +66,7 @@ const configureApp = () => {
   // handle request data:
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
-  app.use(cors({ credentials: true, origin: "http://localhost:3001" }));
+  app.use(cors({ credentials: true, origin: ["https://ezflix.netlify.app", "https://ezflix.herokuapp.com", "http://localhost:3000"] }));
   app.use(compression());
   app.use(cookieParser());
 
@@ -109,6 +109,10 @@ const configureApp = () => {
   app.use("/api", apiRouter);
   app.use("/auth", authRouter);
 };
+
+app.get("/", (req, res, next) => {
+  res.json("EZFLIX Server");
+});
 
 // Main function declaration;
 const bootApp = async () => {
