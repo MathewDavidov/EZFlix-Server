@@ -45,7 +45,6 @@ router.delete("/logout", (req, res, next) => {
 });
 
 router.get("/me", (req, res) => {
-  console.log("user: (in me) " + req.user);
   res.json(req.user);
 });
 
