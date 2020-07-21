@@ -10,7 +10,7 @@ EZFlix is a full stack web application completed for the CUNY2X bootcamp. The ba
 
 ### Configure the ```.env``` file
 
-Please make sure to create a `.env` file. You can copy [```.env.example```](./env.example) and fill in the correct information as follows:
+Please make sure to create a `.env` file. You can copy [```.env.example```](./.env.example) and fill in the correct information as follows:
 
 You must define an API key to run the app locally:
 
