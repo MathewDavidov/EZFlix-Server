@@ -43,10 +43,10 @@ router.post("/favorite/:id", async (req, res, next) => {
     let results = {};
 
     // Use an axios call to the movie API to get a movie based on the ID
-    await Axios
-      .get(`https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.API_KEY}`)
+    await Axios.get(
+      `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.API_KEY}`
+    )
       .then((result) => {
-        // console.log(result.data);
         results = result.data;
       })
       .catch((error) => console.log(error));
@@ -76,7 +76,7 @@ router.post("/favorite/:id", async (req, res, next) => {
 // Route for removing a favorite movie based on given ID and the logged in user.
 router.delete("/:id/movies/remove/:movieID", async (req, res, next) => {
   // If there is no user logged in, send a forbidden HTTP status
-  if(!req.user) {
+  if (!req.user) {
     res.status(403).send("User is not logged in.");
   }
 
@@ -84,9 +84,11 @@ router.delete("/:id/movies/remove/:movieID", async (req, res, next) => {
   const { movieID } = req.params;
 
   try {
-    // Find the logged in user and the movie to be removed based on the given parameters 
+    // Find the logged in user and the movie to be removed based on the given parameters
     const currentUser = await User.findByPk(req.user.id, { include: Movie });
-    const movieToBeRemoved = await Movie.findOne({ where: { movieAPIid: movieID } });
+    const movieToBeRemoved = await Movie.findOne({
+      where: { movieAPIid: movieID },
+    });
 
     // If the movie doesn't exist in the database, return a 401.
     if (movieToBeRemoved == null) {
@@ -101,19 +103,13 @@ router.delete("/:id/movies/remove/:movieID", async (req, res, next) => {
       res.status(401).send("No such movie exists");
     }
 
-    // Now we can remove the movie from the association 
+    // Now we can remove the movie from the association
     await currentUser.removeMovie(movieToBeRemoved);
-    // await currentUser.removeMovie({
-    //   where: {
-    //     userId: id,
-    //     movieId: movieAPIid,
-    //   }
-    // })
 
     res.status(204).end();
   } catch (error) {
     next(error);
   }
-})
+});
 
 module.exports = router;

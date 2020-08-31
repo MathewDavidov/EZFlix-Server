@@ -1,16 +1,11 @@
 var express = require("express");
 var router = express.Router();
 
-// Subrouters;
-// const campusesRouter = require("./campuses");
-// const studentsRouter = require("./students");
+// Subrouters
 const userRouter = require("./users");
 const movieRouter = require("./movies");
 
-// Mount our subrouters to assemble our apiRouter;
-
-// router.use("/campuses", campusesRouter);
-// router.use("/students", studentsRouter);
+// Mount our subrouters to assemble our apiRouter
 router.use("/users", userRouter);
 router.use("/movies", movieRouter);
 
