@@ -3,34 +3,34 @@ const Sequelize = require("sequelize");
 const db = require("../db");
 
 const User = db.define("user", {
-    email: { 
-        type: Sequelize.STRING, 
-        unique: true,
-        allowNull: false,
-        validate: {
-            isEmail: true,
-        }
+  email: {
+    type: Sequelize.STRING,
+    unique: true,
+    allowNull: false,
+    validate: {
+      isEmail: true,
     },
-    imageUrl: {
-      type: Sequelize.STRING,
-      defaultValue: "https://via.placeholder.com/256x256?text=User+Placeholder",
+  },
+  imageUrl: {
+    type: Sequelize.STRING,
+    defaultValue: "https://via.placeholder.com/256x256?text=User+Placeholder",
+  },
+  password: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      len: [6, 50],
     },
-    password: { 
-        type: Sequelize.STRING, 
-        allowNull: false,
-        validate: {
-            len: [6, 50],
-        },
-        get() {
-            return () => this.getDataValue("password");
-        } 
+    get() {
+      return () => this.getDataValue("password");
     },
-    salt: {
-        type: Sequelize.STRING,
-        get() {
-            return () => this.getDataValue("salt");
-        }
+  },
+  salt: {
+    type: Sequelize.STRING,
+    get() {
+      return () => this.getDataValue("salt");
     },
+  },
 });
 
 User.generateSalt = function () {
